@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Card, Grid, TextField, Typography } from "@material-ui/core";
+import Header from "../../common/header/header";
 import "./login.css";
 
 const Login = props => {
@@ -13,8 +14,6 @@ const Login = props => {
   const authenticateUser = () => {
     if (username === "vicky" && password === "vicky") {
       // check if fields are entered
-      
-      
     } else if (!username || !password) {
       setErrMsg({ isError: true });
     } else {
@@ -23,7 +22,8 @@ const Login = props => {
   };
 
   return (
-    <div>
+    <>
+      <Header />
       <Card className="login-card">
         <Grid container direction="column">
           <Grid item>
@@ -77,7 +77,7 @@ const Login = props => {
           </Grid>
         </Grid>
       </Card>
-    </div>
+    </>
   );
 };
 
