@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Grid, TextField, Typography } from "@material-ui/core";
 import Header from "../../common/header/header";
+import { access_token } from "../../common/common";
 import "./login.css";
 
 const Login = props => {
@@ -13,7 +14,10 @@ const Login = props => {
 
   const authenticateUser = () => {
     if (username === "vicky" && password === "vicky") {
-      // check if fields are entered
+      sessionStorage.userAuth = access_token;
+
+      props.history.push("/home");
+    //   alert('');
     } else if (!username || !password) {
       setErrMsg({ isError: true });
     } else {
