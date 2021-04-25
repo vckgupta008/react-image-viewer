@@ -1,0 +1,20 @@
+.edit-name-modal {
+    outline: 0;
+}
+.edit-name-modal> div:first-child{
+    background-color: white !important;
+    opacity: 0.5 !important;
+}
+
+.makeStyles-paper-1,.makeStyles-paper-2 {
+    outline: 0 !important;
+    border: unset !important;
+}
+
+.modal-title {
+    font-size: 22px;
+}
+
+.form-field {
+    margin-top: 15px !important;
+}

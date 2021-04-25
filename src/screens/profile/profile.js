@@ -4,6 +4,7 @@ import { Fab } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
+import EditNameModal from "../../common/editNameModal/editNameModal";
 import Header from "../../common/header/header";
 import avatar from "../../assets/download.png";
 import "./profile.css";
@@ -27,6 +28,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       fullname: "Vicky Gupta",
+      openEditNameModal: false,
       posts: [
         {
           id: "17914978075280650",
@@ -71,13 +73,30 @@ class Profile extends Component {
       ]
     };
   }
+
+  handleEditNameModal = () => {
+    this.setState({
+      openEditNameModal: !this.state.openEditNameModal
+    });
+  };
+
+  saveFullName = updatedName => {
+    this.setState({
+      fullname: updatedName
+    });
+  };
+
   render() {
-    const { fullname, posts } = this.state;
-    
-    // const classes = useStyles();
+    const { fullname, posts, openEditNameModal } = this.state;
+
     return (
       <>
-        <Header isUser />
+        <EditNameModal
+          visible={openEditNameModal}
+          onClose={() => this.handleEditNameModal()}
+          onUpdate={updatedName => this.saveFullName(updatedName)}
+        />
+        <Header />
         <div className="profile-container">
           <div className="profile-header">
             <div className="profile-avatar">
@@ -92,7 +111,11 @@ class Profile extends Component {
               </div>
               <div className="profile-fullname">
                 {fullname}
-                <Fab color="secondary" aria-label="edit">
+                <Fab
+                  color="secondary"
+                  aria-label="edit"
+                  onClick={() => this.handleEditNameModal()}
+                >
                   <EditIcon />
                 </Fab>
               </div>
