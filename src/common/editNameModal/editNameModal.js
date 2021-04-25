@@ -33,7 +33,7 @@ const EditNameModal = ({ visible, onClose, onUpdate }) => {
     } else {
       onUpdate(fullName);
       setFullName("");
-        onClose();
+      onClose();
     }
   };
 

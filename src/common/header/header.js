@@ -34,7 +34,6 @@ const Header = props => {
       props.props.history.push("/");
   }
 
-  console.log(props);
   return (
     <header>
       <div className="header-container">

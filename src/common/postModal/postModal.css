@@ -1,0 +1,26 @@
+.post-modal {
+  outline: 0;
+}
+
+.post-modal > div:first-child {
+  background-color: white !important;
+  opacity: 0.5 !important;
+}
+div[class^="PostModal-paper"] {
+  outline: 0 !important;
+  border: unset !important;
+}
+
+#post-container {
+  display: flex;
+}
+
+.post-img {
+  width: 50%;
+}
+.post-img > img {
+  width: 100%;
+}
+.post-info {
+  width: 50%;
+}

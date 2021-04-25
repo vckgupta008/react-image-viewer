@@ -48,7 +48,7 @@
 }
 
 .grid-list>.MuiGridListTile-root {
-    width: 350px !important;
-    height: 350px !important;
+    width: 33% !important;
+    height: 380px !important;
     cursor: pointer;
 }

@@ -4,6 +4,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import EditNameModal from "../../common/editNameModal/editNameModal";
+import PostModal from "../../common/postModal/postModal";
 import Header from "../../common/header/header";
 import avatar from "../../assets/download.png";
 import "./profile.css";
@@ -14,6 +15,8 @@ class Profile extends Component {
     this.state = {
       fullname: "Vicky Gupta",
       openEditNameModal: false,
+      openSelectedPostModal: false,
+      selectedPost: {},
       posts: [
         {
           id: "17914978075280650",
@@ -59,10 +62,13 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount(){
-      if(!sessionStorage.userAuth){
-        this.props.history.push('/')
-      }
+  componentDidMount() {
+    if (!sessionStorage.userAuth) {
+      this.props.history.push("/");
+    }
+    else {
+        
+    }
   }
 
   handleEditNameModal = () => {
@@ -76,9 +82,27 @@ class Profile extends Component {
       fullname: updatedName
     });
   };
+  openSelectedPost = selectedPost => {
+    this.setState({
+      openSelectedPostModal: true,
+      selectedPost
+    });
+  };
+  closeSelectedPost = () => {
+    this.setState({
+      openSelectedPostModal: false,
+      selectedPost: {}
+    });
+  };
 
   render() {
-    const { fullname, posts, openEditNameModal } = this.state;
+    const {
+      fullname,
+      posts,
+      openEditNameModal,
+      openSelectedPostModal,
+      selectedPost
+    } = this.state;
 
     return (
       <>
@@ -87,7 +111,14 @@ class Profile extends Component {
           onClose={() => this.handleEditNameModal()}
           onUpdate={updatedName => this.saveFullName(updatedName)}
         />
-        <Header isProfile props={this.props}/>
+        <PostModal
+          selectedPost={selectedPost}
+          visible={openSelectedPostModal}
+          onClose={() => this.closeSelectedPost()}
+          onUpdateLikes={() => console.log()}
+          onUpdateComment={() => console.log()}
+        />
+        <Header isProfile props={this.props} />
         <div className="profile-container">
           <div className="profile-header">
             <div className="profile-avatar">
@@ -115,7 +146,10 @@ class Profile extends Component {
           <div className="profile-body">
             <GridList cellHeight={180} className="grid-list">
               {posts.map(post => (
-                <GridListTile key={post.id}>
+                <GridListTile
+                  key={post.id}
+                  onClick={() => this.openSelectedPost(post)}
+                >
                   <img src={post.media_url} alt={post.id} />
                 </GridListTile>
               ))}
