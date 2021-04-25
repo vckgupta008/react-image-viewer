@@ -23,4 +23,62 @@ div[class^="PostModal-paper"] {
 }
 .post-info {
   width: 50%;
+  margin-left: 10px;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+}
+.post-header {
+  display: flex;
+  /* align-items: center; */
+}
+.post-avatar > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.post-username {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+hr {
+  margin-top: 10px;
+  color: #e0e0e0;
+}
+
+.post-caption {
+  font-size: 14px;
+  font-weight: 500;
+}
+.post-hastag {
+  font-size: 13px;
+  color: #9dcdff;
+}
+
+.post-comments {
+  margin-top: 20px;
+}
+
+.comments > .username {
+  font-size: 13px;
+  font-weight: bold;
+}
+.comments > .comment {
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comment-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
 }

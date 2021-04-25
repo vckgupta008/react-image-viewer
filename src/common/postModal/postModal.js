@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, Button, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import avatar from "../../assets/download.png";
+import { Favorite, FavoriteBorder } from "@material-ui/icons";
 import "./postModal.css";
 
 const useStyles = theme => ({
@@ -19,32 +20,62 @@ class PostModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      postDetails: {}
+      postDetails: props.selectedPost,
+      newComment: ""
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log("next props", nextProps.selectedPost);
+  updateComment = () => {
+    const { postDetails, newComment } = this.state;
+    const { onUpdatePost } = this.props;
+    this.setState(
+      {
+        postDetails: {
+          ...postDetails,
+          comments: [...postDetails.comments, newComment]
+        },
+        newComment: ""
+      },
+      () => {
+        onUpdatePost(this.state.postDetails);
+      }
+    );
+  };
+
+  toggleLike = isLiked => {
+    const { postDetails, newComment } = this.state;
+    const { onUpdatePost } = this.props;
+    this.setState(
+      {
+        postDetails: {
+          ...postDetails,
+          isLiked: isLiked,
+          likeCount: isLiked
+            ? postDetails.likeCount + 1
+            : postDetails.likeCount - 1
+        }
+      },
+      () => {
+        onUpdatePost(this.state.postDetails);
+      }
+    );
+  };
+
+  onChangeComment = e => {
     this.setState({
-      postDetails: nextProps.selectedPost
+      newComment: e.target.value
     });
-  }
+  };
 
   render() {
-    const {
-      visible,
-      onClose,
-      onUpdateLikes,
-      onUpdateComment,
-      classes
-    } = this.props;
+    const { visible, onClose, classes } = this.props;
 
-    const {postDetails}=this.state;
+    const { postDetails, newComment } = this.state;
 
     console.log(postDetails);
     return (
       <Modal open={visible} onClose={onClose} className="post-modal">
-       <div
+        <div
           style={{
             top: "50%",
             left: "50%",
@@ -54,10 +85,67 @@ class PostModal extends Component {
           className={classes.paper}
         >
           <div className="post-img">
-            <img src={postDetails&&postDetails.media_url} alt="img" />
+            <img src={postDetails && postDetails.media_url} alt="img" />
           </div>
           <div className="post-info">
+            <div className="post-top-info">
+              <div className="post-header">
+                <div className="post-avatar">
+                  <img src={avatar} alt="avatar" />
+                </div>
+                <div className="post-username">{postDetails.username}</div>
+              </div>
+              <hr />
 
+              <div className="post-caption">{postDetails.caption}</div>
+              <div className="post-hastag">{postDetails.hashtag}</div>
+              <div className="post-comments">
+                {postDetails.comments.map(comment => {
+                  return (
+                    <div className="comments">
+                      <span className="username">{postDetails.username}:</span>{" "}
+                      <span className="comment">{comment}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="post-footer">
+              <div className="like-button">
+                <div
+                  className="like-post"
+                  onClick={() => this.toggleLike(!postDetails.isLiked)}
+                >
+                  {postDetails.isLiked ? (
+                    <Favorite style={{ color: "red" }} />
+                  ) : (
+                    <FavoriteBorder />
+                  )}
+                </div>
+                {postDetails.likeCount ? (
+                  <div>
+                    {postDetails.likeCount === 1
+                      ? "1 like"
+                      : `${postDetails.likeCount} likes`}
+                  </div>
+                ) : null}
+              </div>
+              <div className="comment-container">
+                <TextField
+                  label="Add a comment"
+                  value={newComment}
+                  onChange={e => this.onChangeComment(e)}
+                  style={{ marginRight: "5px", width: "80%" }}
+                />
+                <Button
+                  color="primary"
+                  onClick={() => this.updateComment()}
+                  variant="contained"
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </Modal>
