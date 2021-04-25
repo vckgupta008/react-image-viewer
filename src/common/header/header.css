@@ -2,5 +2,38 @@ header {
   background: #263238;
   color: white;
   font-size: 18px;
-  padding: 20px 15px;
+  padding: 0px 15px;
+}
+.header-title {
+  font-size: 20px;
+}
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-action {
+  display: flex;
+  align-items: center;
+}
+.header-action > .MuiFormControl-root {
+  background-color: #a8adaf;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.MuiFilledInput-underline:after {
+    border-bottom: unset !important;
+}
+.MuiInputAdornment-root {
+  margin-top: 0px;
+}
+#input-with-icon-textfield {
+  padding: 5px !important;
+}
+.avatar > img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }
