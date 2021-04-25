@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Fab } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import GridList from "@material-ui/core/GridList";
@@ -8,20 +7,6 @@ import EditNameModal from "../../common/editNameModal/editNameModal";
 import Header from "../../common/header/header";
 import avatar from "../../assets/download.png";
 import "./profile.css";
-
-// const useStyles = makeStyles(theme => ({
-//     root: {
-//       display: "flex",
-//       flexWrap: "wrap",
-//       justifyContent: "space-around",
-//       overflow: "hidden",
-//       backgroundColor: theme.palette.background.paper
-//     },
-//     gridList: {
-//       width: 400,
-//       height: 400
-//     }
-//   }));
 
 class Profile extends Component {
   constructor(props) {
@@ -74,6 +59,12 @@ class Profile extends Component {
     };
   }
 
+  componentDidMount(){
+      if(!sessionStorage.userAuth){
+        this.props.history.push('/')
+      }
+  }
+
   handleEditNameModal = () => {
     this.setState({
       openEditNameModal: !this.state.openEditNameModal
@@ -96,11 +87,11 @@ class Profile extends Component {
           onClose={() => this.handleEditNameModal()}
           onUpdate={updatedName => this.saveFullName(updatedName)}
         />
-        <Header />
+        <Header isProfile props={this.props}/>
         <div className="profile-container">
           <div className="profile-header">
             <div className="profile-avatar">
-              <img src={avatar} />
+              <img src={avatar} alt="avatar" />
             </div>
             <div className="profile-info">
               <div className="profile-username">vicky.gupta</div>

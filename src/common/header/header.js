@@ -6,7 +6,7 @@ import {
   MenuItem,
   InputAdornment
 } from "@material-ui/core";
-import { Search, Face } from "@material-ui/icons";
+import { Search } from "@material-ui/icons";
 import avatar from "../../assets/download.png";
 import "./header.css";
 
@@ -20,51 +20,78 @@ const Header = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const loadProfilePage = () => {
+    props.props.history.push("/profile");
+  };
+
+  const loadHomePage = () => {
+    props.props.history.push("/home");
+  };
+
+  const logout = ()=>{
+      sessionStorage.userAuth="";
+      props.props.history.push("/");
+  }
+
+  console.log(props);
   return (
     <header>
       <div className="header-container">
-        <div className="header-title">Image Viewer</div>
-
+        <div className="header-title" onClick={loadHomePage}>Image Viewer</div>
         <div className="header-action">
-          <TextField
-            id="input-with-icon-textfield"
-            placeholder="Search..."
-            variant="filled"
-            value={props.value}
-            onChange={props.onChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              )
-            }}
-          />
-          <div className="avatar">
-            <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <img src={avatar} />
-            </Button>
-            <Menu
-              id="simple-menu"
-              elevation={0}
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+          {props.isHome ? (
+            <TextField
+              id="input-with-icon-textfield"
+              placeholder="Search..."
+              variant="filled"
+              value={props.value}
+              onChange={props.onChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                )
               }}
-            >
-              <MenuItem onClick={handleClose}>My Account</MenuItem>
-              <hr />
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
-          </div>
+            />
+          ) : (
+            ""
+          )}
+          {props.isHome || props.isProfile ? (
+            <div className="avatar">
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <img src={avatar} alt="avatar"/>
+              </Button>
+              <Menu
+                id="simple-menu"
+                elevation={0}
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {!props.isProfile ? (
+                  <>
+                    <MenuItem onClick={loadProfilePage}>
+                      My Account
+                    </MenuItem>
+                    <hr />
+                  </>
+                ) : (
+                  ""
+                )}
+
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </header>

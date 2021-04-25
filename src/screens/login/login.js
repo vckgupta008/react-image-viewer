@@ -13,7 +13,7 @@ const Login = props => {
   });
 
   const authenticateUser = () => {
-    if (username === "vicky" && password === "vicky") {
+    if (username === "admin" && password === "admin") {
       sessionStorage.userAuth = access_token;
 
       props.history.push("/home");

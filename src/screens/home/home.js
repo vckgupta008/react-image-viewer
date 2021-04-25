@@ -53,7 +53,7 @@ const Home = props => {
   }, []);
   return (
     <>
-      <Header isUser />
+      <Header isHome props={props}/>
       Homepage
     </>
   );
