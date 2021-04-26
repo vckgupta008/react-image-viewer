@@ -99,17 +99,16 @@ class Profile extends Component {
     });
   };
 
-  updatePost=updatedPost=>{
-      const {posts}=this.state;
-      console.log("posts",posts);
-      const newPost=updatedPost;
-    //   delete newPost.index;
-      posts[updatedPost.index]=newPost;
-      console.log(newPost,posts);
-      this.setState({
-        posts
-      })
-  }
+  updatePost = updatedPost => {
+    const { posts } = this.state;
+    console.log("posts", posts);
+    const newPost = updatedPost;
+    posts[updatedPost.index] = newPost;
+    console.log(newPost, posts);
+    this.setState({
+      posts
+    });
+  };
 
   render() {
     const {
@@ -132,7 +131,7 @@ class Profile extends Component {
             selectedPost={selectedPost}
             visible={openSelectedPostModal}
             onClose={() => this.closeSelectedPost()}
-            onUpdatePost={(updatedPost) => this.updatePost(updatedPost)}
+            onUpdatePost={updatedPost => this.updatePost(updatedPost)}
           />
         ) : (
           ""

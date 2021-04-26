@@ -29,15 +29,17 @@ const Header = props => {
     props.props.history.push("/home");
   };
 
-  const logout = ()=>{
-      sessionStorage.userAuth="";
-      props.props.history.push("/");
-  }
+  const logout = () => {
+    sessionStorage.userAuth = "";
+    props.props.history.push("/");
+  };
 
   return (
     <header>
       <div className="header-container">
-        <div className="header-title" onClick={loadHomePage}>Image Viewer</div>
+        <div className="header-title" onClick={loadHomePage}>
+          Image Viewer
+        </div>
         <div className="header-action">
           {props.isHome ? (
             <TextField
@@ -64,7 +66,7 @@ const Header = props => {
                 aria-haspopup="true"
                 onClick={handleClick}
               >
-                <img src={avatar} alt="avatar"/>
+                <img src={avatar} alt="avatar" />
               </Button>
               <Menu
                 id="simple-menu"
@@ -75,15 +77,12 @@ const Header = props => {
                 onClose={handleClose}
               >
                 {!props.isProfile ? (
-                  <>
-                    <MenuItem onClick={loadProfilePage}>
-                      My Account
-                    </MenuItem>
-                    <hr />
-                  </>
+                  <MenuItem onClick={loadProfilePage}>My Account</MenuItem>
                 ) : (
                   ""
                 )}
+
+                {!props.isProfile && <hr />}
 
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>

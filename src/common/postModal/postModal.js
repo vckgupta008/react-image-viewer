@@ -43,7 +43,7 @@ class PostModal extends Component {
   };
 
   toggleLike = isLiked => {
-    const { postDetails, newComment } = this.state;
+    const { postDetails } = this.state;
     const { onUpdatePost } = this.props;
     this.setState(
       {

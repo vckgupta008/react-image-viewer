@@ -18,71 +18,76 @@ import { Favorite, FavoriteBorder } from "@material-ui/icons";
 
 const Home = props => {
   const [homeDetails, setHomeData] = useState([]);
-
+  const [originalData, setOriginalData] = useState([]);
+  //   const [searchVal, setSearchVal]=  useState("");
   useEffect(() => {
     // check if valid auth
     const auth = sessionStorage.userAuth;
     if (auth) {
-      //   fetch(
-      //     `https://graph.instagram.com/me/media?fields=id,caption&access_token=${auth}`
-      //   )
-      //     .then(
-      //       rsp => {
-      //         if (rsp.status === 200) {
-      //           rsp.json().then(res => {
-      //             console.log(res);
-      //             const promises = res.data.map(item =>
-      //               fetch(
-      //                 `https://graph.instagram.com/${item.id}?fields=id,media_type,media_url,username,timestamp&access_token=${auth}`
-      //               )
-      //             );
-      //             Promise.all(promises)
-      //               .then(
-      //                 responses => {
-      //                   return Promise.all(
-      //                     responses.map(function(response) {
-      //                       return response.json();
-      //                     })
-      //                   );
-      //                 },
-      //                 err => console.log(err)
-      //               )
-      //               .then(
-      //                 function(data) {
-      //                   data.forEach((item, i) => {
-      //                     const { caption } = res.data[i];
-      //                     const hashIndex = caption ? caption.indexOf("#") : -1;
-      //                     if (hashIndex > -1) {
-      //                       item.caption = caption.substring(0, hashIndex);
-      //                       item.hashtag = caption.substring(hashIndex);
-      //                     } else {
-      //                       item.caption = caption;
-      //                     }
-      //                     item = {
-      //                       ...item,
-      //                       isLiked: i % 4 === 0,
-      //                       likeCount: i % 3,
-      //                       comments: [],
-      //                       comment: ""
-      //                     };
-      //                   });
-      //                   localStorage.dataSetMain = JSON.stringify(data);
-      //                   setHomeData(data);
-      //                 },
-      //                 err => console.log(err)
-      //               )
-      //               .catch(err => console.log(err));
-      //           });
-      //         }
-      //       },
-      //       err => console.log(err)
-      //     )
-      //     .catch(err => console.log(err));
+      fetch(
+        `https://graph.instagram.com/me/media?fields=id,caption&access_token=${auth}`
+      )
+        .then(
+          rsp => {
+            if (rsp.status === 200) {
+              rsp.json().then(res => {
+                console.log("res", res);
+                const promises = res.data.map(item =>
+                  fetch(
+                    `https://graph.instagram.com/${item.id}?fields=id,media_type,media_url,username,timestamp&access_token=${auth}`
+                  )
+                );
+                Promise.all(promises)
+                  .then(
+                    responses => {
+                      return Promise.all(
+                        responses.map(function(response) {
+                          return response.json();
+                        })
+                      );
+                    },
+                    err => console.log(err)
+                  )
+                  .then(
+                    function(data) {
+                      console.log("data", data);
+                      const newData = data.map((item, i) => {
+                        const { caption } = res.data[i];
+                        const hashIndex = caption ? caption.indexOf("#") : -1;
+                        if (hashIndex > -1) {
+                          item.caption = caption.substring(0, hashIndex);
+                          item.hashtag = caption.substring(hashIndex);
+                        } else {
+                          item.caption = caption;
+                        }
+                        return {
+                          ...item,
+                          isLiked: i % 4 > 2,
+                          likeCount: i % 4,
+                          comments: i % 3 == 0 ? ["nice"] : [],
+                          comment: ""
+                        };
+                      });
+                      console.log("data2", newData);
+                      localStorage.dataSetMain = JSON.stringify(newData);
+                      setHomeData(newData);
+                      setOriginalData(newData);
+                    },
+                    err => console.log(err)
+                  )
+                  .catch(err => console.log(err));
+              });
+            }
+          },
+          err => console.log(err)
+        )
+        .catch(err => console.log(err));
     } else {
       props.history.push("/");
     }
 
-    setHomeData(JSON.parse(localStorage.dataSetMain));
+    // setHomeData(JSON.parse(localStorage.dataSetMain));
+    // setOriginalData(JSON.parse(localStorage.dataSetMain));
   }, []);
 
   useEffect(() => {
@@ -114,15 +119,35 @@ const Home = props => {
     });
   };
 
+  const filterList = e => {
+    // setSearchVal(e.target.value);
+    const searchVal = e.target.value;
+    console.log(searchVal);
+    if (searchVal) {
+      // const list=JSON.parse(localStorage.dataSetMain);
+      const filteredList = originalData.filter(
+        item =>
+          item.caption &&
+          item.caption.toLowerCase().includes(searchVal.toLowerCase())
+      );
+      setHomeData(filteredList);
+    } else {
+      setHomeData(originalData);
+    }
+  };
+
+  //   console.log("searchVal",searchVal);
   return (
     <>
-      <Header isHome props={props} />
+      <Header isHome props={props} onChange={e => filterList(e)} />
       <Grid container justify="center">
         {homeDetails.map((item, index) => (
-          <Grid item sm="6" lg="4" className="post">
+          <Grid item sm={6} lg={4} className="post" key={index}>
             <Card>
               <CardHeader
-                avatar={<img className="user-img" src={userImage} />}
+                avatar={
+                  <img className="user-img" src={userImage} alt="avatar" />
+                }
                 title={
                   <Typography gutterBottom>
                     <b>{item.username}</b>
@@ -132,7 +157,7 @@ const Home = props => {
               />
               <CardContent>
                 <div className="post-details">
-                  <img src={item.media_url} />
+                  <img src={item.media_url} alt="avatar" />
                   <Divider className="m-btm" />
                   <Typography variant="body1">{item.caption}</Typography>
                   <Typography variant="body1" className="hashtag">
@@ -161,11 +186,11 @@ const Home = props => {
                       </span>
                     ) : null}
                   </Grid>
-                  <Grid item xs="12">
+                  <Grid item xs={12}>
                     {item &&
                       item.comments &&
-                      item.comments.map(comment => (
-                        <Typography gutterBottom>
+                      item.comments.map((comment, index) => (
+                        <Typography gutterBottom key={index}>
                           <b>custom_user:</b> {comment}
                         </Typography>
                       ))}

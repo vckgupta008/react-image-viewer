@@ -1,27 +1,28 @@
 .post {
-    margin: 10px!important;
-    box-sizing: border-box;
+  margin: 10px !important;
+  box-sizing: border-box;
 }
 
 .user-img {
-    width: 100px;
-    height: 100px;
-    clip-path: circle(34%);
+  width: 100px;
+  height: 100px;
+  clip-path: circle(34%);
 }
 
 .post-details > img {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .m-btm {
-    margin-bottom: 5px!important;
+  margin-bottom: 5px !important;
 }
 
 .hashtag {
-    color: #007cff;
+  color: #007cff;
 }
 
 .like-post {
-    margin-right: 10px;
+  margin-right: 10px;
+  cursor: pointer;
 }
