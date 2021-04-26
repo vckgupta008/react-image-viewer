@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Card, Grid, TextField, Typography } from "@material-ui/core";
-import Header from "../../common/header/Header";
+import Header from "../../common/header/header";
 import { access_token } from "../../common/common";
-import "./Login.css";
+import "./login.css";
 
 const Login = props => {
   const [username, setUserName] = useState("");

@@ -10,8 +10,8 @@ import {
   Typography
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import Header from "../../common/header/Header";
-import "./Home.css";
+import Header from "../../common/header/header";
+import "./home.css";
 import userImage from "../../assets/download.png";
 import moment from "moment";
 import { Favorite, FavoriteBorder } from "@material-ui/icons";

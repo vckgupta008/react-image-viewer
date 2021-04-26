@@ -3,7 +3,7 @@ import { Modal, Button, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import avatar from "../../assets/download.png";
 import { Favorite, FavoriteBorder } from "@material-ui/icons";
-import "./PostModal.css";
+import "./postModal.css";
 
 const useStyles = theme => ({
   paper: {

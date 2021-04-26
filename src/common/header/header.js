@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import avatar from "../../assets/download.png";
-import "./Header.css";
+import "./header.css";
 
 const Header = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);

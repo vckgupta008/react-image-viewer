@@ -3,11 +3,11 @@ import { Fab } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import EditNameModal from "../../common/editNameModal/EditNameModal";
-import PostModal from "../../common/postModal/PostModal";
-import Header from "../../common/header/Header";
+import EditNameModal from "../../common/editNameModal/editNameModal";
+import PostModal from "../../common/postModal/postModal";
+import Header from "../../common/header/header";
 import avatar from "../../assets/download.png";
-import "./Profile.css";
+import "./profile.css";
 
 class Profile extends Component {
   constructor(props) {
