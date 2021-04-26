@@ -52,19 +52,33 @@ const Home = props => {
                     function(data) {
                       console.log("data", data);
                       const newData = data.map((item, i) => {
-                        const { caption } = res.data[i];
-                        const hashIndex = caption ? caption.indexOf("#") : -1;
-                        if (hashIndex > -1) {
-                          item.caption = caption.substring(0, hashIndex);
-                          item.hashtag = caption.substring(hashIndex);
+                        // const { caption } = res.data[i];
+                        const caption = res.data[i];
+                        if (caption.caption) {
+                          item.rawCaption = caption.caption;
+                          item.hashtag = caption.caption
+                            .split(" ")
+                            .filter(str => str.startsWith("#"))
+                            .join(" ");
+                            item.caption = item.rawCaption.replace(
+                            /(^|\s)#[a-zA-Z0-9][^\\p{L}\\p{N}\\p{P}\\p{Z}][\w-]*\b/g,
+                            ""
+                          );
                         } else {
-                          item.caption = caption;
+                          item.caption = null;
                         }
+                        // const hashIndex = caption ? caption.indexOf("#") : -1;
+                        // if (hashIndex > -1) {
+                        //   item.caption = caption.substring(0, hashIndex);
+                        //   item.hashtag = caption.substring(hashIndex);
+                        // } else {
+                        //   item.caption = caption;
+                        // }
                         return {
                           ...item,
                           isLiked: i % 4 > 2,
                           likeCount: i % 4,
-                          comments: i % 3 == 0 ? ["nice"] : [],
+                          comments: i % 3 === 0 ? ["nice"] : [],
                           comment: ""
                         };
                       });
@@ -191,11 +205,11 @@ const Home = props => {
                       item.comments &&
                       item.comments.map((comment, index) => (
                         <Typography gutterBottom key={index}>
-                          <b>custom_user:</b> {comment}
+                          <b>{item.username}</b> {comment}
                         </Typography>
                       ))}
                   </Grid>
-                  <Grid container alignItems="flex-end">
+                  <Grid container alignItems="flex-end" className="comment-container">
                     <TextField
                       label="Add a comment"
                       value={item.comment}
