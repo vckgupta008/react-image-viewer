@@ -28,7 +28,10 @@ const Header = props => {
 
   //Redirect to home page
   const loadHomePage = () => {
-    props.props.history.push("/home");
+    if(props.isProfile){
+      props.props.history.push("/home");
+    }
+    
   };
 
   // Clearing the session storage and local storage on logout
@@ -70,7 +73,7 @@ const Header = props => {
                 aria-haspopup="true"
                 onClick={handleClick}
               >
-                <img src={avatar} alt="avatar" />
+                <img src={avatar} alt="avatar" style={{border: '1px solid white'}}/>
               </Button>
               <Menu
                 id="simple-menu"
