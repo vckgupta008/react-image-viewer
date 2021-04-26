@@ -3,11 +3,11 @@ import { Fab } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import EditNameModal from "../../common/editNameModal/editNameModal";
-import PostModal from "../../common/postModal/postModal";
-import Header from "../../common/header/header";
+import EditNameModal from "../../common/editNameModal/EditNameModal";
+import PostModal from "../../common/postModal/PostModal";
+import Header from "../../common/header/Header";
 import avatar from "../../assets/download.png";
-import "./profile.css";
+import "./Profile.css";
 
 class Profile extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    //Check if valid auth token
     if (!sessionStorage.userAuth) {
       this.props.history.push("/");
     } else {
@@ -31,17 +32,21 @@ class Profile extends Component {
     }
   }
 
+  //handle the edit name modal
   handleEditNameModal = () => {
     this.setState({
       openEditNameModal: !this.state.openEditNameModal
     });
   };
 
+  //Updating the fullname
   saveFullName = updatedName => {
     this.setState({
       fullname: updatedName
     });
   };
+
+  //Open the modal with selected post
   openSelectedPost = (selectedPost, index) => {
     this.setState({
       openSelectedPostModal: true,
@@ -58,6 +63,7 @@ class Profile extends Component {
     });
   };
 
+  //Updating the post data
   updatePost = updatedPost => {
     const { posts } = this.state;
     const newPost = updatedPost;

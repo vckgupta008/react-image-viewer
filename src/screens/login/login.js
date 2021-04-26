@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Card, Grid, TextField, Typography } from "@material-ui/core";
-import Header from "../../common/header/header";
+import Header from "../../common/header/Header";
 import { access_token } from "../../common/common";
-import "./login.css";
+import "./Login.css";
 
 const Login = props => {
   const [username, setUserName] = useState("");
@@ -12,6 +12,7 @@ const Login = props => {
     msg: ""
   });
 
+  // Method to validate and login the user 
   const authenticateUser = () => {
     if (username === "admin" && password === "admin") {
       sessionStorage.userAuth = access_token;

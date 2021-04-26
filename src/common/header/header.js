@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import avatar from "../../assets/download.png";
-import "./header.css";
+import "./Header.css";
 
 const Header = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,14 +21,17 @@ const Header = props => {
     setAnchorEl(null);
   };
 
+  //Redirect to profile page
   const loadProfilePage = () => {
     props.props.history.push("/profile");
   };
 
+  //Redirect to home page
   const loadHomePage = () => {
     props.props.history.push("/home");
   };
 
+  // Clearing the session storage and local storage on logout
   const logout = () => {
     sessionStorage.userAuth = "";
     localStorage.clear();

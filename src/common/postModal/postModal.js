@@ -3,7 +3,7 @@ import { Modal, Button, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import avatar from "../../assets/download.png";
 import { Favorite, FavoriteBorder } from "@material-ui/icons";
-import "./postModal.css";
+import "./PostModal.css";
 
 const useStyles = theme => ({
   paper: {
@@ -25,6 +25,7 @@ class PostModal extends Component {
     };
   }
 
+  //Updating the comments
   updateComment = () => {
     const { postDetails, newComment } = this.state;
     const { onUpdatePost } = this.props;
@@ -42,6 +43,7 @@ class PostModal extends Component {
     );
   };
 
+  //Toggle the like for the post
   toggleLike = isLiked => {
     const { postDetails } = this.state;
     const { onUpdatePost } = this.props;

@@ -10,8 +10,8 @@ import {
   Typography
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import Header from "../../common/header/header";
-import "./home.css";
+import Header from "../../common/header/Header";
+import "./Home.css";
 import userImage from "../../assets/download.png";
 import moment from "moment";
 import { Favorite, FavoriteBorder } from "@material-ui/icons";
@@ -50,6 +50,7 @@ const Home = props => {
                     function(data) {
                       const newData = data.map((item, i) => {
                         const caption = res.data[i];
+                        //Checking and extracting hastags from caption
                         if (caption.caption) {
                           item.rawCaption = caption.caption;
                           item.hashtag = caption.caption
@@ -120,6 +121,7 @@ const Home = props => {
     });
   };
 
+  // On search filter the data 
   const filterList = e => {
     const searchVal = e.target.value;
     if (searchVal) {
