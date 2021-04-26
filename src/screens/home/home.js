@@ -19,7 +19,6 @@ import { Favorite, FavoriteBorder } from "@material-ui/icons";
 const Home = props => {
   const [homeDetails, setHomeData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
-  //   const [searchVal, setSearchVal]=  useState("");
   useEffect(() => {
     // check if valid auth
     const auth = sessionStorage.userAuth;
@@ -31,7 +30,6 @@ const Home = props => {
           rsp => {
             if (rsp.status === 200) {
               rsp.json().then(res => {
-                console.log("res", res);
                 const promises = res.data.map(item =>
                   fetch(
                     `https://graph.instagram.com/${item.id}?fields=id,media_type,media_url,username,timestamp&access_token=${auth}`
@@ -50,9 +48,7 @@ const Home = props => {
                   )
                   .then(
                     function(data) {
-                      console.log("data", data);
                       const newData = data.map((item, i) => {
-                        // const { caption } = res.data[i];
                         const caption = res.data[i];
                         if (caption.caption) {
                           item.rawCaption = caption.caption;
@@ -60,20 +56,13 @@ const Home = props => {
                             .split(" ")
                             .filter(str => str.startsWith("#"))
                             .join(" ");
-                            item.caption = item.rawCaption.replace(
+                          item.caption = item.rawCaption.replace(
                             /(^|\s)#[a-zA-Z0-9][^\\p{L}\\p{N}\\p{P}\\p{Z}][\w-]*\b/g,
                             ""
                           );
                         } else {
                           item.caption = null;
                         }
-                        // const hashIndex = caption ? caption.indexOf("#") : -1;
-                        // if (hashIndex > -1) {
-                        //   item.caption = caption.substring(0, hashIndex);
-                        //   item.hashtag = caption.substring(hashIndex);
-                        // } else {
-                        //   item.caption = caption;
-                        // }
                         return {
                           ...item,
                           isLiked: i % 4 > 2,
@@ -82,7 +71,6 @@ const Home = props => {
                           comment: ""
                         };
                       });
-                      console.log("data2", newData);
                       localStorage.dataSetMain = JSON.stringify(newData);
                       setHomeData(newData);
                       setOriginalData(newData);
@@ -99,7 +87,6 @@ const Home = props => {
     } else {
       props.history.push("/");
     }
-
     // setHomeData(JSON.parse(localStorage.dataSetMain));
     // setOriginalData(JSON.parse(localStorage.dataSetMain));
   }, []);
@@ -134,11 +121,8 @@ const Home = props => {
   };
 
   const filterList = e => {
-    // setSearchVal(e.target.value);
     const searchVal = e.target.value;
-    console.log(searchVal);
     if (searchVal) {
-      // const list=JSON.parse(localStorage.dataSetMain);
       const filteredList = originalData.filter(
         item =>
           item.caption &&
@@ -149,15 +133,17 @@ const Home = props => {
       setHomeData(originalData);
     }
   };
-
-  //   console.log("searchVal",searchVal);
   return (
     <>
       <Header isHome props={props} onChange={e => filterList(e)} />
-      <Grid container justify="center">
+      <Grid
+        container
+        justify="space-between"
+        style={{ width: "70%", margin: "auto" }}
+      >
         {homeDetails.map((item, index) => (
-          <Grid item sm={6} lg={4} className="post" key={index}>
-            <Card>
+          <Grid item sm={6} key={index}>
+            <Card className="post">
               <CardHeader
                 avatar={
                   <img className="user-img" src={userImage} alt="avatar" />
@@ -209,7 +195,11 @@ const Home = props => {
                         </Typography>
                       ))}
                   </Grid>
-                  <Grid container alignItems="flex-end" className="comment-container">
+                  <Grid
+                    container
+                    alignItems="flex-end"
+                    className="comment-container"
+                  >
                     <TextField
                       label="Add a comment"
                       value={item.comment}
@@ -220,7 +210,11 @@ const Home = props => {
                     />
                     <Button
                       color="primary"
-                      onClick={() => addComment(index)}
+                      onClick={() => {
+                        if (item.comment) {
+                          addComment(index);
+                        }
+                      }}
                       variant="contained"
                     >
                       Add

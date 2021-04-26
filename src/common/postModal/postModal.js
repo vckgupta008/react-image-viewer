@@ -69,10 +69,7 @@ class PostModal extends Component {
 
   render() {
     const { visible, onClose, classes } = this.props;
-
     const { postDetails, newComment } = this.state;
-
-    console.log(postDetails);
     return (
       <Modal open={visible} onClose={onClose} className="post-modal">
         <div
@@ -100,9 +97,9 @@ class PostModal extends Component {
               <div className="post-caption">{postDetails.caption}</div>
               <div className="post-hastag">{postDetails.hashtag}</div>
               <div className="post-comments">
-                {postDetails.comments.map(comment => {
+                {postDetails.comments.map((comment,index) => {
                   return (
-                    <div className="comments">
+                    <div className="comments" key={index}>
                       <span className="username">{postDetails.username}:</span>{" "}
                       <span className="comment">{comment}</span>
                     </div>
@@ -139,7 +136,11 @@ class PostModal extends Component {
                 />
                 <Button
                   color="primary"
-                  onClick={() => this.updateComment()}
+                  onClick={() => {
+                    if (newComment) {
+                      this.updateComment();
+                    }
+                  }}
                   variant="contained"
                 >
                   Add

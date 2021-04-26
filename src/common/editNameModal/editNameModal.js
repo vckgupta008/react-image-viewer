@@ -44,7 +44,6 @@ const EditNameModal = ({ visible, onClose, onUpdate }) => {
         <TextField
           className="form-field"
           required
-          error={error && !fullName}
           label="Full Name"
           value={fullName}
           onChange={e => {
@@ -52,8 +51,8 @@ const EditNameModal = ({ visible, onClose, onUpdate }) => {
             setError(false);
           }}
           fullWidth
-          helperText={error && !fullName && "required"}
         />
+        <div className="error-msg">{error && !fullName && "required"}</div>
         <Button
           color="primary"
           className="login-button"

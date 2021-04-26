@@ -1,7 +1,3 @@
-.profile-container {
-  /* padding: 10px 20%; */
-}
-
 .profile-header {
   padding: 10px 20%;
   display: flex;
@@ -44,11 +40,11 @@
   height: 40px;
 }
 .profile-body {
-    padding: 10px 10%;
+  padding: 10px 10%;
 }
 
-.grid-list>.MuiGridListTile-root {
-    width: 33% !important;
-    height: 380px !important;
-    cursor: pointer;
+.grid-list > .MuiGridListTile-root {
+  width: 33% !important;
+  height: 380px !important;
+  cursor: pointer;
 }

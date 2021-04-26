@@ -1,6 +1,5 @@
 .post {
   margin: 10px !important;
-  box-sizing: border-box;
 }
 
 .user-img {
@@ -19,7 +18,7 @@
 }
 
 .hashtag {
-  color: #007cff;
+  color: #429be8;
 }
 
 .like-post {

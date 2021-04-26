@@ -31,6 +31,7 @@ const Header = props => {
 
   const logout = () => {
     sessionStorage.userAuth = "";
+    localStorage.clear();
     props.props.history.push("/");
   };
 

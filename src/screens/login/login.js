@@ -17,7 +17,6 @@ const Login = props => {
       sessionStorage.userAuth = access_token;
 
       props.history.push("/home");
-    //   alert('');
     } else if (!username || !password) {
       setErrMsg({ isError: true });
     } else {
@@ -39,7 +38,6 @@ const Login = props => {
             <TextField
               className="form-field"
               required
-              error={error.isError && !username}
               label="Username"
               value={username}
               onChange={e => {
@@ -47,14 +45,15 @@ const Login = props => {
                 setErrMsg({ isError: false, msg: "" });
               }}
               fullWidth
-              helperText={error.isError && !username && "required"}
             />
+            <div className="error-msg">
+              {error.isError && !username && "required"}
+            </div>
           </Grid>
           <Grid item>
             <TextField
               className="form-field"
               type="password"
-              error={error.isError && !password}
               required
               label="Password"
               value={password}
@@ -63,8 +62,10 @@ const Login = props => {
                 setErrMsg({ isError: false, msg: "" });
               }}
               fullWidth
-              helperText={error.isError && !password && "required"}
             />
+            <div className="error-msg">
+              {error.isError && !password && "required"}
+            </div>
           </Grid>
           <Grid className="error-msg" item>
             {error.msg}

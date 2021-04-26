@@ -10,6 +10,7 @@
 .error-msg {
   color: #f44336;
   font-size: 14px;
+  margin-top: -10px;
 }
 
 .login-button {
